@@ -23,6 +23,9 @@ export class SignalsExampleOneComponent {
   exPrice = computed(() => this.selectedProduct().price * this.quantity());
   color = computed(() => this.exPrice() > 50 ? 'green': 'blue')
 
+  // Using a declarative approach to using effect function
+  e = effect(() => console.log('In effect, price: ', this.exPrice()));
+
 
   constructor(){
     console.log('In constructor: ', this.quantity());

@@ -13,3 +13,4 @@
 
 <div>Product: {{ selectedProduct().name }}</div>
 <div>Product: {{ selectedProduct().price }}</div>
+<div [style.color]="color()">Extended Price: {{ exPrice() | currency }}</div>

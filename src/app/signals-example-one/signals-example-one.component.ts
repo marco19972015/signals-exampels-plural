@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Product } from '../product';
 
 @Component({
@@ -8,29 +8,26 @@ import { Product } from '../product';
 })
 export class SignalsExampleOneComponent {
 
-  // signal to hold quantity to show in template
   quantity = signal(1);
-  // singal to itterate through the array in the template so user can select a new number
   qtyAvailable = signal([1, 2, 3, 4, 5, 6]);
 
-  // signal that holds an object regarding product data on item
   selectedProduct = signal<Product>({
     id: 5,
     name: 'Hammer',
     price: 12
   })
 
+  // Don't forget to open the boxes
+  // Computed using a function as a return, we use an arrow function and we don't pass 
+  // anything so its just empty parenthesis.
+  exPrice = computed(() => this.selectedProduct().price * this.quantity());
+  color = computed(() => this.exPrice() > 50 ? 'green': 'blue')
+
 
   constructor(){
     console.log('In constructor: ', this.quantity());
-
-    // An effect doesn't have a parameter so we use empty parentheses
-    // An effect is scheduled to run any time its reference signals change
-    // effect will only run when the lasted value of a signal is returned
     effect(() => console.log('In effect:', this.quantity()))
-
     this.quantity.update(q => q * 2);
-
   }
 
   onQuantitySelected(qty: number){
